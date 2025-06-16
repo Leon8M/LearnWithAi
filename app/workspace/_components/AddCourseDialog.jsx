@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import {
   Dialog,
   DialogContent,
@@ -24,6 +25,7 @@ import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
 import { Loader2, Sparkle } from 'lucide-react'
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 
 function AddCourseDialog({children}) {
@@ -39,28 +41,36 @@ function AddCourseDialog({children}) {
         category: "",
     });
 
-const handleInputChange = (field, value) => {
-    setFormData((prevData) => ({
-        ...prevData,
-        [field]: value,
-    }));
-    console.log("Form Data:", formData);
-}
+    const router = useRouter();
 
-const onGenerateCourse = async() => {
-    console.log("Generating course with data:", formData);
-    try {
-    setLoading(true);
+        const handleInputChange = (field, value) => {
+            setFormData((prevData) => ({
+             ...prevData,
+                [field]: value,
+            }));
+            console.log("Form Data:", formData);
+        }
 
-    const result = await axios.post('/api/generate-course-layout', {
-        ...formData,
-    });
-    console.log("Course generation result:", result.data);
-    setLoading(false);} catch (error) {
-        console.error("Error generating course:", error);
-        setLoading(false);
+        const onGenerateCourse = async() => {
+            console.log("Generating course with data:", formData);
+            const courseId = uuidv4();
+            try {
+                setLoading(true);
+
+                const result = await axios.post('/api/generate-course-layout', {
+                 ...formData,
+                courseId: courseId
+                });
+                console.log("Course generation result:", result.data);
+                setLoading(false);
+                router.push('/workspace/edit-course/' + result.data?.courseId);
+
+
+            } catch (error) {
+                console.error("Error generating course:", error);
+                setLoading(false);
+         }
     }
-}
 
   return (
     <Dialog>

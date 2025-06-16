@@ -15,9 +15,9 @@ Schema:
 "category": "string",
 "difficulty": "string",
 "includeVideo": "boolean",
-"chapters": "number",
+"NoOfChapters": "number",
 "bannerImagePrompt": "string",
-"chapter": [
+"chapters": [
 {
 "chapterName": "string",
 "duration": "string",
@@ -31,7 +31,7 @@ Schema:
 , User Input:`
 
 export async function POST(req) {
-    const formData = await req.json();
+    const {courseId, ...formData} = await req.json();
     const user = currentUser();
 
   const ai = new GoogleGenAI({
@@ -70,13 +70,13 @@ if (!RawResp) {
   const RawJson = RawResp.replace('```json', '').replace('```', '');
   const JsonResp = JSON.parse(RawJson);
 
-
   //save all info to database
-  ///const result = await db.insert(coursesTable).values({
-   /// ...formData,
-  ///  courseJson: response.text(),
-  ///  userEmail: user?.primaryEmailAddress?.emailAddress,
- /// });
-  return NextResponse.json(JsonResp);
+  const result1 = await db.insert(coursesTable).values({
+    ...formData,
+    courseJson: JSON.stringify(JsonResp),
+    userEmail: user?.primaryEmailAddress?.emailAddress,
+    cid: courseId
+  });
+  return NextResponse.json({courseId: courseId});
 
 }
