@@ -1,5 +1,6 @@
 import { boolean, json } from "drizzle-orm/gel-core";
 import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { Ban } from "lucide-react";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -18,5 +19,6 @@ export const coursesTable = pgTable("courses", {
   difficulty: varchar().notNull(),
   category: varchar().notNull(),
   courseJson: json(),
+  bannerImageUrl: varchar().default(''),
   userEmail: varchar('user_email').references(() => usersTable.email),
 });
