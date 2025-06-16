@@ -16,7 +16,7 @@ export const coursesTable = pgTable("courses", {
   chapters: integer().notNull(),
   includeVideo: boolean().default(false),
   difficulty: varchar().notNull(),
-  category: varchar(),
+  category: varchar().notNull(),
   courseJson: json(),
   userEmail: varchar('user_email').references(() => usersTable.email),
 });

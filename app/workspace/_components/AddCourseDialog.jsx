@@ -22,10 +22,13 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
-import { Sparkle } from 'lucide-react'
+import { Loader2, Sparkle } from 'lucide-react'
+import axios from 'axios';
 
 
 function AddCourseDialog({children}) {
+
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -44,8 +47,15 @@ const handleInputChange = (field, value) => {
     console.log("Form Data:", formData);
 }
 
-const onGenerateCourse = () => {
+const onGenerateCourse = async() => {
     console.log("Generating course with data:", formData);
+    setLoading(true);
+
+    const result = await axios.post('/api/generate-course-layout', {
+        ...formData,
+    });
+    console.log("Course generation result:", result.data);
+    setLoading(false);
 }
 
   return (
@@ -90,7 +100,10 @@ const onGenerateCourse = () => {
                         <Input placeholder="Enter category(Separate with a comma)"  onChange={(e) => handleInputChange("category", e?.target.value)} />
                     </div>
                     <div className='flex justify-end mt-4'>
-                        <Button onClick={onGenerateCourse}><Sparkle /> Generate Course</Button>
+                        <Button onClick={onGenerateCourse} disabled={loading}>
+                            {loading ? <Loader2 className="animate-spin" /> : <Sparkle />}
+                            Generate Course
+                        </Button>
                     </div>
                 </div>
             </DialogDescription>
