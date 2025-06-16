@@ -49,13 +49,17 @@ const handleInputChange = (field, value) => {
 
 const onGenerateCourse = async() => {
     console.log("Generating course with data:", formData);
+    try {
     setLoading(true);
 
     const result = await axios.post('/api/generate-course-layout', {
         ...formData,
     });
     console.log("Course generation result:", result.data);
-    setLoading(false);
+    setLoading(false);} catch (error) {
+        console.error("Error generating course:", error);
+        setLoading(false);
+    }
 }
 
   return (

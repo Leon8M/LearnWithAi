@@ -52,14 +52,21 @@ export async function POST(req) {
     },
   ];
 
-  const response = await ai.models.generateContentStream({
-    model,
-    config,
-    contents,
-  });
-  
-  console.log("Response:", response.candidates[0].content.parts[0].text);
-  const RawResp = response?.candidates[0]?.content?.parts[0]?.text;
+  const result = await ai.models.generateContent({
+  model,
+  contents,
+  generationConfig: config,
+});
+
+console.log("Raw Gemini Response:", JSON.stringify(result, null, 2));
+const RawResp = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+console.log("Raw Gemini Response:", JSON.stringify(result, null, 2));
+
+if (!RawResp) {
+  console.error("Invalid Gemini response", result);
+  return NextResponse.json({ error: "Invalid Gemini response" }, { status: 500 });
+}
+
   const RawJson = RawResp.replace('```json', '').replace('```', '');
   const JsonResp = JSON.parse(RawJson);
 

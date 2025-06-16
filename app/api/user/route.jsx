@@ -22,5 +22,5 @@ if (users?.length == 0) {
     return NextResponse.json(result);
 }
 
-    return NextResponse.json()
+    return NextResponse.json(users[0])
 }
