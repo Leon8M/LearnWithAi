@@ -24,7 +24,7 @@ function EnrolledCard({ course, enrollCourse }) {
         <div className=''>
             <h2 className='flex justify-between text-gray-600 text-sm'>Progress: <span>{calcProgress()}%</span></h2>
             <Progress value={calcProgress()}/>
-            <Link href={"/workspace/course/" + course?.cid}>
+            <Link href={"/workspace/view-course/" + course?.cid}>
             <Button className="mt-2">Continue ...</Button>
             </Link>
         </div>

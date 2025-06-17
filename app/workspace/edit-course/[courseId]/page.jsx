@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Courseinfo from '../_components/Courseinfo';
 import ChapterTopList from '../_components/ChapterTopList';
 
-function EditCourse() {
+function EditCourse({viewCourse = false}) {
     const {courseId} = useParams();
     const [loading, setLoading] = useState(false);
     const [course, setCourse] = useState(null);
@@ -25,7 +25,7 @@ function EditCourse() {
     }
   return (
     <div>
-        <Courseinfo course={course} />
+        <Courseinfo course={course} viewCourse={viewCourse} />
         <ChapterTopList course={course} />
     </div>
   )
