@@ -31,13 +31,14 @@ Schema:
 }
 , User Input:`
 
+export const ai = new GoogleGenAI({
+    apiKey: process.env.GEMINI_API_KEY,
+  });
+
 export async function POST(req) {
     const {courseId, ...formData} = await req.json();
     const user = currentUser();
 
-  const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-  });
   const config = {
     responseMimeType: 'text/plain',
   };

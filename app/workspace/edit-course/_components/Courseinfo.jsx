@@ -1,10 +1,30 @@
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
 import { Book, Clock, TrendingUp } from 'lucide-react';
 import Image from 'next/image';
-import React from 'react'
+import React, { useState } from 'react'
 
 function Courseinfo({ course }) {
     const courseLayout = course?.courseJson?.course;
+    const [loading, setLoading] = useState(false);
+
+    const GenerateContent = async() => {
+        // Logic to generate content based on course structure
+        setLoading(true);
+        try {
+            const result = await axios.post('/api/generate-course', {
+                course: courseLayout,
+                courseName: course?.name,
+                courseId: course?.cid
+            });
+            console.log("Generated content:", result.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error generating content:", error);
+            setLoading(false);
+        }
+    }   
+
   return (
     <div className=' flex-row-reverse md:flex gap-4 p-6 bg-gray-50 rounded-lg shadow-lg justify-between'>
         <div className='flex flex-col gap-2 p-4 bg-white rounded-lg shadow-md'>
@@ -33,7 +53,9 @@ function Courseinfo({ course }) {
                     </section>
                 </div>
             </div>
-            <Button>Generate Content</Button>
+            <Button onClick={GenerateContent} disabled={loading}>
+                {loading ? "Generating..." : "Generate Content"}
+            </Button>
         </div>
         {course?.bannerImageUrl && (
         <Image
@@ -47,5 +69,6 @@ function Courseinfo({ course }) {
     </div>
   )
 }
+
 
 export default Courseinfo

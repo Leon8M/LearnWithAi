@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import Courseinfo from '../_components/Courseinfo';
+import ChapterTopList from '../_components/ChapterTopList';
 
 function EditCourse() {
     const {courseId} = useParams();
@@ -25,6 +26,7 @@ function EditCourse() {
   return (
     <div>
         <Courseinfo course={course} />
+        <ChapterTopList course={course} />
     </div>
   )
 }
