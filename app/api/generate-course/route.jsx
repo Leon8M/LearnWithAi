@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { ai } from "../generate-course-layout/route";
+import { max } from "drizzle-orm";
+import axios from "axios";
 
 const PROMPT = `Depends on Chapter name and Topic Generate content for each topic in HTML and give response in JSON format.
 Schema:{
@@ -53,9 +55,14 @@ export async function POST(request) {
 
 
     //Get Youtube videos
+
+    const youtubeVideos = await getYoutubeVideos(chapter?.chapterName);
     
 
-    return JsonResp;
+    return {
+      youtubeVideos: youtubeVideos,
+      courseData: JsonResp
+    };
     })
 
     const courseJson = await Promise.all(promises);
@@ -64,4 +71,20 @@ export async function POST(request) {
         courseName: courseName,
         courseContent: courseJson
     })
+}
+
+const YOUTUBE_BASE_URL = "https://www.googleapis.com/youtube/v3/search";
+
+const getYoutubeVideos = async (topic) => {
+    const params = {
+      part: 'snippet',
+      q:topic,
+      maxResults: 3,
+      type: 'video',
+      key: process.env.YOUTUBE_API_KEY,
+    }
+
+    const response = await axios.get(YOUTUBE_BASE_URL, { params });
+    return response.data.items;
+
 }
