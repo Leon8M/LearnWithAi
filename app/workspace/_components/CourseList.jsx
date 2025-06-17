@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import AddCourseDialog from './AddCourseDialog';
 import axios from 'axios';
 import { useUser } from '@clerk/nextjs';
+import CourseCard from './CourseCard';
 
 function CourseList() {
     const [courseList, setCourseList] = useState([])
@@ -14,21 +15,21 @@ function CourseList() {
     }, [user]);
 
     const GetCourseList = async () => {
-        const response = await axios.post('/api/courses');
+        const response = await axios.get('/api/courses');
         console.log("Course List:", response.data);
+        setCourseList(response.data);
     }
 
   return (
     <div className='p-5 bg-white rounded-lg shadow-lg'>
         <h2 className='text-2xl font-bold mb-4'>Your Courses</h2>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+        <div>
             {courseList.length > 0 ? (
-            courseList.map((course) => (
-                <div key={course.id} className='p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow'>
-                <h3 className='text-xl font-semibold'>{course.title}</h3>
-                <p className='mt-2 text-gray-600'>{course.description}</p>
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5'>
+                    {courseList.map((course, index) => (
+                        <CourseCard key={index} course={course} />
+                    ))}
                 </div>
-            ))
             ) : (
                 <div>
                     <p className='text-gray-500 my-2 text-lg'>No courses available.</p>

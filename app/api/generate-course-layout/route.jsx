@@ -37,7 +37,7 @@ export const ai = new GoogleGenAI({
 
 export async function POST(req) {
     const {courseId, ...formData} = await req.json();
-    const user = currentUser();
+    const user = await currentUser();
 
   const config = {
     responseMimeType: 'text/plain',
