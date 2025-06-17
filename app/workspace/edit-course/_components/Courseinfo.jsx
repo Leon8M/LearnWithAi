@@ -1,12 +1,15 @@
 import { Button } from '@/components/ui/button';
+import {toast} from "sonner";
 import axios from 'axios';
 import { Book, Clock, TrendingUp } from 'lucide-react';
-import Image from 'next/image';
+import Image from 'next/image';import { useRouter } from 'next/navigation';
+;
 import React, { useState } from 'react'
 
 function Courseinfo({ course }) {
     const courseLayout = course?.courseJson?.course;
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const GenerateContent = async() => {
         // Logic to generate content based on course structure
@@ -19,9 +22,12 @@ function Courseinfo({ course }) {
             });
             console.log("Generated content:", result.data);
             setLoading(false);
+            router.replace(`/workspace`);
+            toast.success("Content generated successfully! You go Bud :)");
         } catch (error) {
             console.error("Error generating content:", error);
             setLoading(false);
+            toast.error("Server is acting up Bud :( , Try again !")
         }
     }   
 

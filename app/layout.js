@@ -4,6 +4,7 @@ import { Provider } from "./provider";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import { Toaster } from "@/components/ui/sonner";
 
 
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
         <Provider>
           {children}
         </Provider>
+        <Toaster />
       </body>
     </html>
     </ClerkProvider>

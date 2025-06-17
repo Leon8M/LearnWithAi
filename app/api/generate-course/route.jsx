@@ -2,8 +2,14 @@ import { NextResponse } from "next/server";
 import { ai } from "../generate-course-layout/route";
 import { max } from "drizzle-orm";
 import axios from "axios";
+import { coursesTable } from "@/config/schema";
+import { db } from "@/config/db";
+import { eq } from "drizzle-orm";
 
-const PROMPT = `Depends on Chapter name and Topic Generate content for each topic in HTML and give response in JSON format.
+const PROMPT = `(
+Respond strictly in minified JSON format only, without markdown code blocks or comments.
+Avoid HTML tags inside string values. Escape all special characters properly) 
+Depends on Chapter name and Topic Generate content for each topic in HTML and give response in JSON format.
 Schema:{
 chapterName:<>,
 
@@ -39,17 +45,20 @@ export async function POST(request) {
     config,
     contents,
   });
-  console.log("Raw Gemini Response:", JSON.stringify(response, null, 2));
+  //console.log("Raw Gemini Response:", JSON.stringify(response, null, 2));
   const RawResp = response?.candidates?.[0]?.content?.parts?.[0]?.text;
   
  
   
   if (!RawResp) {
-    console.error("Invalid Gemini response", response);
+    //console.error("Invalid Gemini response", response);
     return NextResponse.json({ error: "Invalid Gemini response" }, { status: 500 });
   }
   
-    const RawJson = RawResp.replace('```json', '').replace('```', '');
+    let RawJson = RawResp.replace(/```json|```/g, '').trim();
+
+    // Trying to fix common bad escapes before parsing
+    RawJson = RawJson.replace(/\\([^"ntr\\\/bfu])/g, '\\\\$1')
     console.log("🟡 RawResp before parsing:\n", RawJson);
     const JsonResp = JSON.parse(RawJson);
 
@@ -58,6 +67,10 @@ export async function POST(request) {
 
     const youtubeVideos = await getYoutubeVideos(chapter?.chapterName);
     
+    console.log({
+      youtubeVideos: youtubeVideos,
+      courseData: JsonResp
+    });
 
     return {
       youtubeVideos: youtubeVideos,
@@ -66,6 +79,11 @@ export async function POST(request) {
     })
 
     const courseJson = await Promise.all(promises);
+
+    //Save to db
+    const dbResp = await db.update(coursesTable).set({
+        courseContent: JSON.stringify(courseJson),
+    }).where(eq(coursesTable.cid, courseId));
 
     return NextResponse.json({
         courseName: courseName,
@@ -85,6 +103,18 @@ const getYoutubeVideos = async (topic) => {
     }
 
     const response = await axios.get(YOUTUBE_BASE_URL, { params });
-    return response.data.items;
+    const youtubeVideoListResponse = response.data.items;
+    const youtubeVideoList = [];
+    youtubeVideoListResponse.forEach((item) => {
+        const video = {
+            title: item.snippet.title,
+            description: item.snippet.description,
+            thumbnail: item.snippet.thumbnails.default.url,
+            videoId: item.id?.videoId
+        }
+        youtubeVideoList.push(video);
+    });
+    console.log("Youtube Videos:", youtubeVideoList);
+    return youtubeVideoList;
 
 }
