@@ -1,6 +1,6 @@
-# 🤖 AiGuru Lab: The AI-Powered Learning Platform
+# 🤖 AI LearnHub: The AI-Powered Learning Platform
 
-AiGuru Lab is a fully-featured, AI-powered learning platform built to revolutionize how educational content is created and consumed. Using the power of Google's Gemini API, users can generate comprehensive courses on any topic imaginable, complete with detailed chapters and relevant video resources from YouTube.
+AI LearnHub is a fully-featured, AI-powered learning platform built to revolutionize how educational content is created and consumed. Using the power of Google's Gemini API, users can generate comprehensive courses on any topic imaginable, complete with detailed chapters and relevant video resources from YouTube.
 
 ---
 
