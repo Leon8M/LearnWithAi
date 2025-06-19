@@ -42,7 +42,8 @@ function AddCourseDialog({children}) {
     });
 
     const router = useRouter();
-
+        
+        // Function to handle input changes
         const handleInputChange = (field, value) => {
             setFormData((prevData) => ({
              ...prevData,
@@ -50,7 +51,7 @@ function AddCourseDialog({children}) {
             }));
             console.log("Form Data:", formData);
         }
-
+        // Function to handle course generation
         const onGenerateCourse = async() => {
             console.log("Generating course with data:", formData);
             const courseId = uuidv4();

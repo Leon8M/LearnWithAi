@@ -12,6 +12,7 @@ function Courseinfo({ course, viewCourse }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
+    // Function to generate course content
     const GenerateContent = async() => {
         // Logic to generate content based on course structure
         setLoading(true);

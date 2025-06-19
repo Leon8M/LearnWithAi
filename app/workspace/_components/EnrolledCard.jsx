@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 
 function EnrolledCard({ course, enrollCourse }) {
     const courseJson = course?.courseJson?.course;
+    // calculate progress based on completed chapters
     const calcProgress = () => {
         return (((enrollCourse?.completedChapters?.length ?? 0) / course.courseContent?.length) * 100).toFixed(1);
     }

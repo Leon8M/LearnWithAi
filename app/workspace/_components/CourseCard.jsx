@@ -10,6 +10,7 @@ function CourseCard({ course }) {
     const courseJson = course?.courseJson?.course;
     const [loading, setLoading] = useState(false);
 
+    // Function to handle course enrollment
     const onEnroll = async () => {
       setLoading(true);
       try{

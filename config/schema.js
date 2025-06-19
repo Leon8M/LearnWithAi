@@ -2,6 +2,7 @@ import { boolean, json, unique } from "drizzle-orm/gel-core";
 import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
 import { Ban } from "lucide-react";
 
+// This file defines the database schema for the application using Drizzle ORM.
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),

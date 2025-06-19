@@ -18,6 +18,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import AddCourseDialog from './AddCourseDialog';
 
+// Define the sidebar options with their titles, icons, and paths
 const SideOptions = [
   {
     title: "Dashboard",

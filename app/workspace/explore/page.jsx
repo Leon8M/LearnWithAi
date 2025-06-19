@@ -12,10 +12,12 @@ function Explore() {
     const [courseList, setCourseList] = useState([])
     const {user} = useUser();
 
+    // Fetch course list when the user is available
     useEffect(() => {
         user && GetCourseList();
     }, [user]);
 
+    // Function to fetch the course list
     const GetCourseList = async () => {
         const response = await axios.get('/api/courses?courseId=all');
         console.log("Course List:", response.data);
