@@ -66,7 +66,7 @@ This is a fully-featured AI-powered learning platform built with **Next.js 14 (A
 * **State Management**: React Context API, useState, SWR for data fetching
 * **AI Integration**: Google Gemini API
 * **Video Integration**: YouTube Data API v3
-* **Database**: *(Specify here, e.g., Prisma + PostgreSQL, MongoDB)*
+* **Database**: PostgreSQL
 * **Deployment**: Vercel
 
 ---
