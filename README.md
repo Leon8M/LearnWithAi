@@ -24,11 +24,8 @@ AiGuru Lab is a fully-featured, AI-powered learning platform built to revolution
 
 ## 🚀 Live Demo
 
-[Live Demo Link](https://your-live-demo-link.com)
+[Live Demo Link](https://learn-with-ai-lilac.vercel.app/)
 
-*(Optional: Add screenshots or GIFs of your application here to showcase its features.)*
-
----
 
 ## 📝 Project Overview
 
@@ -87,8 +84,8 @@ You need to have **Node.js (version 18.x or later)** and **npm/yarn/pnpm** insta
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/aiguru-lab.git
-cd aiguru-lab
+git clone https://github.com/Leon8M/LearnWithAi.git
+cd LearnWithAi
 ```
 
 Install dependencies:
@@ -143,5 +140,5 @@ This project is licensed under the **MIT License** - see the `LICENSE.md` file f
 
 ## 📬 Contact
 
-**Your Name** — [@your\_twitter](https://twitter.com/your_twitter) — [your-email@example.com](mailto:your-email@example.com)
-**Project Link**: [https://github.com/your-username/aiguru-lab](https://github.com/your-username/aiguru-lab)
+**Leon Munene** — [leonmunene254@gmail.com](mailto:leonmunene254@gmail.com)
+**Project Link**: [https://github.com/Leon8M/LearnWithAi](https://github.com/Leon8M/LearnWithAi)
