@@ -35,9 +35,9 @@ const SideOptions = [
     path:'/workspace/explore'
   },
   {
-    title: "AI Tools",
+    title: "How it works",
     icon: PencilRulerIcon,
-    path:'/workspace/ai-tools'
+    path:'/workspace/how-it-works'
   },
   {
     title: "Profile",

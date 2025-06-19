@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 function EnrolledCard({ course, enrollCourse }) {
     const courseJson = course?.courseJson?.course;
     const calcProgress = () => {
-        return (enrollCourse?.completedChapters?.length ?? 0 / course.courseContent?.length) * 100;
+        return (((enrollCourse?.completedChapters?.length ?? 0) / course.courseContent?.length) * 100).toFixed(1);
     }
 
   return (

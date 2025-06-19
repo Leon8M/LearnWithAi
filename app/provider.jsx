@@ -1,4 +1,5 @@
 "use client";
+import { SelectedChapterIndexContext } from '@/context/SelectedChapterIndexContext';
 import { UserDetailContext } from '@/context/UserDetailContext';
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
@@ -9,6 +10,7 @@ export function Provider({ children }) {
 
   const {user} = useUser();
   const [userDetail, setUserDetail] = useState();
+  const [selectedChapterIndex, setSelectedChapterIndex] = useState(0);
 
 
   // This effect runs when the user changes, creating a new user in the database
@@ -28,10 +30,12 @@ export function Provider({ children }) {
   return (
     
     <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
-    <div>
-      {/* This is where you can add global providers, context, or state management */}
-      {children}
-    </div>
+      <SelectedChapterIndexContext.Provider value={{ selectedChapterIndex, setSelectedChapterIndex }}>
+        <div>
+          {/* This is where you can add global providers, context, or state management */}
+          {children}
+        </div>
+      </SelectedChapterIndexContext.Provider>
     </UserDetailContext.Provider>
   )
 }
